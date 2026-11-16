@@ -1,0 +1,527 @@
+/* ---------- Theme ---------- */
+
+/* Dark theme (default) */
+:root {
+  --bg: #0b0d14;
+  --glow-1: rgba(124, 92, 255, 0.28);
+  --glow-2: rgba(59, 130, 246, 0.2);
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --field: rgba(255, 255, 255, 0.05);
+  --text: #eceef5;
+  --muted: #8a8fa3;
+  --primary: #7c5cff;
+  --primary-2: #4f8cff;
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --sheen: rgba(255, 255, 255, 0.07);
+  --shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+  --radius: 18px;
+
+  color-scheme: dark;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Light theme when the computer is in light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f6f7fb;
+    --glow-1: rgba(124, 92, 255, 0.16);
+    --glow-2: rgba(59, 130, 246, 0.12);
+    --surface: rgba(255, 255, 255, 0.75);
+    --surface-hover: rgba(255, 255, 255, 0.9);
+    --border: rgba(15, 23, 42, 0.08);
+    --border-strong: rgba(15, 23, 42, 0.16);
+    --field: rgba(15, 23, 42, 0.04);
+    --text: #0f172a;
+    --muted: #64748b;
+    --danger: #dc2626;
+    --danger-bg: rgba(220, 38, 38, 0.08);
+    --sheen: rgba(255, 255, 255, 0.6);
+    --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 20px 40px -16px rgba(15, 23, 42, 0.18);
+
+    color-scheme: light;
+  }
+}
+
+/* ---------- Base ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* Soft colored glows behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(600px circle at 15% 0%, var(--glow-1), transparent 60%),
+    radial-gradient(500px circle at 90% 20%, var(--glow-2), transparent 60%);
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+}
+
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 48px 16px 64px;
+}
+
+/* ---------- Header ---------- */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.logo {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px -6px var(--primary);
+}
+
+.header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.count {
+  padding: 2px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+/* ---------- Card (glass) ---------- */
+
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ---------- Form fields ---------- */
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font: inherit;
+  color: inherit;
+  background: var(--field);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.25);
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form-error {
+  font-size: 13px;
+  color: var(--danger);
+}
+
+/* ---------- Composer (add note) ---------- */
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  margin-bottom: 40px;
+  transition: border-color 0.2s;
+}
+
+.composer:focus-within {
+  border-color: var(--border-strong);
+}
+
+/* Borderless fields so the composer feels like one surface */
+.composer-title,
+.composer-content {
+  padding: 6px 2px;
+  background: transparent;
+  border: none;
+}
+
+.composer-title:focus,
+.composer-content:focus {
+  box-shadow: none;
+}
+
+.composer-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.composer-content {
+  resize: none;
+}
+
+.composer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s,
+    background 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  border-color: transparent;
+  box-shadow: 0 8px 20px -8px var(--primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  box-shadow: 0 10px 24px -6px var(--primary);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Small square icon buttons on each card */
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    background 0.15s;
+}
+
+.icon-btn:hover:not(:disabled) {
+  color: var(--text);
+  background: var(--field);
+}
+
+.icon-btn-danger:hover:not(:disabled) {
+  color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Notes grid ---------- */
+
+.note-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Note card with subtle 3D tilt (--rx / --ry are set in NoteCard.jsx) */
+.note-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition:
+    transform 0.2s ease-out,
+    border-color 0.2s;
+  animation: card-in 0.4s ease-out;
+}
+
+/* Colored accent line at the top of the card */
+.note-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 0 0 2px 2px;
+  box-shadow: 0 0 16px var(--accent);
+}
+
+/* Light sheen that follows the mouse (--mx / --my) */
+.note-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    300px circle at var(--mx, 50%) var(--my, 0%),
+    var(--sheen),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.note-card:hover {
+  border-color: var(--border-strong);
+}
+
+.note-card:hover::after {
+  opacity: 1;
+}
+
+.note-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.note-content {
+  flex: 1;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.note-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.note-date {
+  font-size: 12.5px;
+  color: var(--muted);
+}
+
+.icon-actions {
+  display: flex;
+  gap: 2px;
+}
+
+/* On devices with a mouse, show card buttons only on hover */
+@media (hover: hover) {
+  .icon-actions {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .note-card:hover .icon-actions,
+  .note-card:focus-within .icon-actions {
+    opacity: 1;
+  }
+}
+
+/* Edit mode */
+.note-card.editing {
+  border-color: var(--primary);
+  transform: none;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-12deg) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) translateY(0);
+  }
+}
+
+/* ---------- Loading skeleton ---------- */
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  min-height: 150px;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--field) 25%, var(--surface-hover) 50%, var(--field) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.skeleton-line.short {
+  width: 45%;
+  height: 16px;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Empty / error states ---------- */
+
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.status h2 {
+  font-size: 17px;
+  color: var(--text);
+}
+
+.status-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+  color: var(--primary);
+  background: var(--field);
+  border-radius: 16px;
+}
+
+.status-error {
+  gap: 14px;
+  color: var(--danger);
+  border-color: var(--danger-bg);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 480px) {
+  .container {
+    padding-top: 28px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .note-card {
+    animation: none;
+    transform: none;
+  }
+
+  .skeleton-line {
+    animation: none;
+  }
+
+  .note-card,
+  .btn {
+    transition: none;
+  }
+}
